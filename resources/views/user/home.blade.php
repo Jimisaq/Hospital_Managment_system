@@ -231,10 +231,10 @@
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>More</h5>
           <ul class="footer-menu">
-            <li><a href="#">Terms & Condition</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
             <li><a href="#">Privacy</a></li>
-            <li><a href="#">Advertise</a></li>
-            <li><a href="#">Join as Doctors</a></li>
+            <li><a href="#">Advertisement</a></li>
+            <li><a href="#">Join as Doctor</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">

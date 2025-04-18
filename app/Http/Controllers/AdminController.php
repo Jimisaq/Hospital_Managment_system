@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Doctor;
 
 use App\Models\Appointment;
@@ -16,9 +18,26 @@ class AdminController extends Controller
 {
     public function addview()
     {
-        return view('admin.add_doctor');
+        if(Auth::id())
+        {
+            if(Auth::user()->usertype==1)
+            {
+                return view('admin.add_doctor');
+            }
+            else
+            {
+                return redirect()->back();
+            }
+        }
+        else{
+            return redirect('login');
+        }
+
+       
     }
-    public function upload(Request $request){
+
+    public function upload(Request $request)
+    {
         $doctor=new doctor;
 
         $image=$request->file;
@@ -42,14 +61,31 @@ class AdminController extends Controller
         return redirect()->back()->with('message','Doctor added successfully ');
     }
 
-    public function showappointment(){
+    public function showappointment()
+    {
+        if(Auth::id())
+        {
+            if(Auth::user()->usertype==1)
+            {  
+                $data=appointment::all();
 
-        $data=appointment::all();
+                return view('admin.showappointment', compact('data'));
+            }
+            else
+            {
+                return redirect()->back();
+            }
+        }
+        else
+        {
+            return redirect('login');
+        }
 
-        return view('admin.showappointment', compact('data'));
+
     }
 
-    public function approved($id){
+    public function approved($id)
+    {
 
         $data=appointment::find($id);
 
@@ -60,7 +96,8 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function canceled($id){
+    public function canceled($id)
+    {
 
         $data=appointment::find($id);
 
@@ -71,14 +108,16 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function showdoctor(){
+    public function showdoctor()
+    {
 
         $data=doctor::all();
 
         return view('admin.showdoctor', compact('data'));
     }
 
-    public function deletedoctor($id){
+    public function deletedoctor($id)
+    {
 
         $data=doctor::find($id);
 
@@ -86,14 +125,16 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
-    public function updatedoctor($id){
+    public function updatedoctor($id)
+    {
 
         $data=doctor::find($id);
 
         return view('admin.update_doctor', compact('data'));
     }
 
-    public function editdoctor(Request $request, $id){
+    public function editdoctor(Request $request, $id)
+    {
 
         $doctor=doctor::find($id);
 

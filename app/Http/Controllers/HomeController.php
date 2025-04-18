@@ -88,20 +88,24 @@ class HomeController extends Controller
 
     public function myappointment(){
         
-        if(Auth::id()){
-
-            $userid=Auth::user()->id;
+        if(Auth::id())
+        {
+            if(Auth::user()->usertype==0)
+            {
+                $userid=Auth::user()->id;
             
-            // Fetch appointments for the logged-in user
-            $appoint=appointment::where('user_id',$userid)->get();
+                // Fetch appointments for the logged-in user
+                $appoint=appointment::where('user_id',$userid)->get();
+    
+                // If user is logged in, show their appointments
+                return view('user.my_appointment', compact('appoint'));
+            }    
 
-            // If user is logged in, show their appointments
-            return view('user.my_appointment', compact('appoint'));
-
-        } else {
-
+        } 
+        else 
+        {
             // If not logged in, redirect them back
-            return redirect()->back();
+            return redirect('login');
         }
 
     }
