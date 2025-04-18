@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminController;
 Route::get('/',[HomeController::class,'index']);
 
 // Francis: Changed '/home' to '/redirect' and protect with 'auth'
-Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth');
+Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth','verified');
 
 // Francis: Dashboard route (optional: only needed if you directly access /dashboard)
 Route::middleware([
