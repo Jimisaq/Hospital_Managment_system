@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Appointment;
 
 class HomeController extends Controller
 {
-    public function redirect()
+   public function redirect()
     {
         if (Auth::id()) {
+
 
             if (Auth::user()->usertype == '0') {
 
@@ -22,6 +22,7 @@ class HomeController extends Controller
             } else {
                 return view('admin.home');
             }
+
         } else {
             return redirect()->back();
         }
@@ -121,3 +122,4 @@ class HomeController extends Controller
        
     }
 }
+

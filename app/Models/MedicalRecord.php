@@ -4,22 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
 
-class Appointment extends Model implements Auditable
+class MedicalRecord extends Model
 {
     use HasFactory;
 
     // Specify the table name if it doesn't follow Laravel's convention
-    protected $table = 'appointments';
+    protected $table = 'medical_records';
 
     // Define the fillable attributes
     protected $fillable = [
         'patient_id',
         'doctor_id',
-        'date',
-        'time',
-        'note',
+        'visit_date',
+        'symptoms',
+        'diagnosis',
+        'notes',
     ];
 
     // Define the relationship with the Patient model
@@ -28,7 +28,7 @@ class Appointment extends Model implements Auditable
         return $this->belongsTo(Patient::class);
     }
 
-    // Define the relationship with the User model (for doctors)
+    // Define the relationship with the User model (for the doctor)
     public function doctor()
     {
         return $this->belongsTo(User::class, 'doctor_id');

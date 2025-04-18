@@ -22,7 +22,6 @@
 </head>
 
 <body>
-
   <!-- Back to top button -->
   <div class="back-to-top"></div>
 
@@ -60,32 +59,52 @@
               <span class="navbar-toggler-icon"></span>
           </button>
 
+            <!-- Search box section -->
+            <li class="nav-item">
 
-              <!-- Search box section -->
-          <li class="nav-item">
+              <form class="form-inline my-2 mx-2 my-lg-0">
 
-            <form class="form-inline my-2 mx-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword" aria-label="Search">
 
-              <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                  <span class="mai-search"></span> <!-- Search Icon -->
+                </button>
 
-                <span class="mai-search"></span> <!-- Search Icon -->
-              </button>
+              </form>
 
-            </form>
+            </li>
 
-          </li>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left Side -->
+            <ul class="navbar-nav ml-auto">
 
-              <ul class="navbar-nav ml-auto">
+                <!-- Authentication Links -->
+                @auth
+                <li>
+                    <!-- Dashboard Button -->
+                    <a href="{{
+                        Auth::user()->role == 'admin' ? route('admin.dashboard') :
+                        (Auth::user()->role == 'doctor' ? route('doctor.dashboard') :
+                        (Auth::user()->role == 'receptionist' ? route('receptionist.dashboard') :
+                        (Auth::user()->role == 'pharmacist' ? route('pharmacist.dashboard') : '#')))
+                    }}"
+                       class="px-4 py-2 text-white rounded hover:bg-blue-600"
+                       style="background-color: #2f855a !important;">
+                        Dashboard
+                    </a>
+                </li>
+                @endauth
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/') }}">Home</a>
-                  </li>
+                <!-- Left Side -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                </li>
+
                   
-                  <li class="nav-item">
+                <li class="nav-item">
                       <a class="nav-link" href="{{ url('/about') }}">About Us</a>
                   </li>
 
@@ -96,14 +115,34 @@
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url('/contact.html') }}">News</a>
                   </li>
-
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/contact.html') }}">Contact</a>
-                  </li>
-             
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
+                </li>
+            
                 @if (Route::has('login'))
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
 
-                  @auth
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                    Profile
+                                </a>
+
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                    </li>
 
                     <li class="nav-item">
                       <a class="nav-link" style="background-color: aqua; color: white;" href="{{ url('myappointment') }}">My Appointment</a>
@@ -126,9 +165,9 @@
                    
                   @endauth
 
-                @endif
-              </ul>            
-      </div>
+              @endif
+            </ul>            
+          </div>
     </nav>
   </header>
 
@@ -211,11 +250,10 @@
 
 @include('user.latest')
 
-
 @include('user.appointment')
 
-  
- 
+
+
   <footer class="page-footer">
     <div class="container">
       <div class="row px-md-3">
@@ -234,7 +272,7 @@
             <li><a href="#">Terms & Conditions</a></li>
             <li><a href="#">Privacy</a></li>
             <li><a href="#">Advertisement</a></li>
-            <li><a href="#">Join as Doctor</a></li>
+            <li><a href="#">Join as Doctors</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
@@ -277,6 +315,6 @@
 <script src="../assets/vendor/wow/wow.min.js"></script>
 
 <script src="../assets/js/theme.js"></script>
-  
+
 </body>
 </html>
