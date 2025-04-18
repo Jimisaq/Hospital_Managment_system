@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 
 use App\Models\Appointment;
+
+use Notification;
+
+use App\Notifications\SendEmailNotification;
+
 class AdminController extends Controller
 {
     public function addview()
@@ -119,5 +124,29 @@ class AdminController extends Controller
         $doctor->save();
 
         return redirect()->back()->with('message','Doctor details updated successfully ');
+    }
+
+    public function emailview($id)
+    {
+        $data=appointment::find($id);
+
+        return view('admin.email_view',compact('data'));
+    }
+
+    public function sendemail(Request $request,$id)
+    {
+        $data = appointment::find($id);
+        $details=[
+            'greeting' => $request->greeting,
+            'body' => $request->body,
+            'actiontext' => $request->actiontext,
+            'actionurl' => $request->actionurl,
+            'endpart' => $request->endpart
+        ];
+
+        Notification::send($data,new SendEmailNotification($details));
+
+        return redirect()->back()->with('message','Email sent successfully.');
+
     }
 }
