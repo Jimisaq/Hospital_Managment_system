@@ -14,6 +14,7 @@
                 <a href="https://wa.me/{{ $doctors->phone }}"><span class="mai-logo-whatsapp"></span></a>
               </div>
             </div>
+            
             <div class="body">
               <p class="text-xl mb-0">{{ $doctors->name }}</p>
               <p class="text-xl mb-0">{{ $doctors->specialty }}</p>
