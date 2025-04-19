@@ -52,7 +52,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       
           <a class="navbar-brand" href="{{ url('/') }}">
-              <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 40px;">
+              <img src="{{ asset('assets/img/logo1.jpg') }}" alt="Logo" style="height: 100px;">
           </a>
 
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -60,7 +60,26 @@
               <span class="navbar-toggler-icon"></span>
           </button>
 
+
+              <!-- Search box section -->
+          <li class="nav-item">
+
+            <form class="form-inline my-2 mx-2 my-lg-0">
+
+              <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword" aria-label="Search">
+
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+
+                <span class="mai-search"></span> <!-- Search Icon -->
+              </button>
+
+            </form>
+
+          </li>
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+              <ul class="navbar-nav ml-auto">
 
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url('/') }}">Home</a>
@@ -104,12 +123,11 @@
                       <li class="nav-item">
                         <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
                       </li>
-
-                        
+                   
                   @endauth
+
                 @endif
-             
-        
+              </ul>            
       </div>
     </nav>
   </header>
