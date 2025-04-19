@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="../assets/css/theme.css">
 </head>
+
 <body>
 
   <!-- Back to top button -->
@@ -31,9 +32,9 @@
         <div class="row">
           <div class="col-sm-8 text-sm">
             <div class="site-info">
-              <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
+              <a href="#"><span class="mai-call text-primary"></span> +256 7984 455 666</a>
               <span class="divider">|</span>
-              <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
+              <a href="#"><span class="mai-mail text-primary"></span> onehealthhospital@gmail.org</a>
             </div>
           </div>
           <div class="col-sm-4 text-right text-sm">
@@ -46,75 +47,86 @@
           </div>
         </div> <!-- .row -->
       </div> <!-- .container -->
-    </div> <!-- .topbar -->
+      </div> <!-- .topbar -->
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 40px;">
-        </a>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+      
+          <a class="navbar-brand" href="{{ url('/') }}">
+              <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" style="height: 40px;">
+          </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+              <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/about') }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
-                </li>
-            </ul>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <!-- Right Side -->
-            <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/') }}">Home</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/about') }}">About Us</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/contact.html') }}">Doctors</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/contact.html') }}">News</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url('/contact.html') }}">Contact</a>
+                  </li>
+             
                 @if (Route::has('login'))
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.show') }}">
-                                    Profile
-                                </a>
+                  @auth
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
+                    <li class="nav-item">
+                      <a class="nav-link" style="background-color: aqua; color: white;" href="{{ url('myappointment') }}">My Appointment</a>
+                    </li>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                      <x-app-layout>
+
+                      </x-app-layout>
+
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">Register</a>
-                            </li>
-                        @endif
-                    @endauth
-                @endif
-            </ul>
-        </div>
-    </div>
-</nav>
 
+                      <li class="nav-item">
+                        <a class="btn btn-primary ml-lg-3" href="{{ route('login') }}">Login</a>
+                      </li>
+
+                          
+                      <li class="nav-item">
+                        <a class="btn btn-primary ml-lg-3" href="{{ route('register') }}">Register</a>
+                      </li>
+
+                        
+                  @endauth
+                @endif
+             
+        
+      </div>
+    </nav>
   </header>
+
+
+  <!-- Display any success message -->
+  @if(session()->has('message'))
+
+  <div class ="alert alert-success alert-dismissable fade show" role="alert">
+
+    <button type = "button" class="close" data-dismiss="alert"> Close </button>
+
+    {{ session()->get('message') }}
+
+  </div>
+
+@endif
 
   <div class="page-hero bg-image overlay-dark" style="background-image: url(../assets/img/bg_image_1.jpg);">
     <div class="hero-section">
@@ -131,7 +143,7 @@
     <div class="page-section py-3 mt-md-n5 custom-index">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-md-4 py-3 py-md-0">
+          <div class="col-md-4 py-3 py-md-0">w
             <div class="card-service wow fadeInUp">
               <div class="circle-shape bg-secondary text-white">
                 <span class="mai-chatbubbles-outline"></span>
@@ -164,7 +176,7 @@
         <div class="row align-items-center">
           <div class="col-lg-6 py-3 wow fadeInUp">
             <h1>Welcome to Your Health <br> Center</h1>
-            <p class="text-grey mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Accusantium aperiam earum ipsa eius, inventore nemo labore eaque porro consequatur ex aspernatur. Explicabo, excepturi accusantium! Placeat voluptates esse ut optio facilis!</p>
+            <p class="text-grey mb-4">We are dedicated to our work and committed to delivering great results. We strive to do what’s right and fair, even when faced with challenges. Our goal is to serve with integrity, handle each task with care, and always seek improvement. We embrace creativity, take responsibility for our actions, and aim to make things easier and better for everyone.</p>
             <a href="about.html" class="btn btn-primary">Learn More</a>
           </div>
           <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
@@ -181,9 +193,8 @@
 
 @include('user.latest')
 
- 
 
-  @include('user.appointment')
+@include('user.appointment')
 
   
  
