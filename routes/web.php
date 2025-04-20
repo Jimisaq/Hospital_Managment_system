@@ -15,7 +15,7 @@ use App\Http\Controllers\AdminController;
 Route::get('/',[HomeController::class,'index']);
 
 // Francis: Changed '/home' to '/redirect' and protect with 'auth'
-Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth');
+Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth','verified');
 
 // Francis: Dashboard route (optional: only needed if you directly access /dashboard)
 Route::middleware([
@@ -51,3 +51,7 @@ Route::get('/deletedoctor/{id}',[AdminController::class,'deletedoctor']);
 Route::get('/updatedoctor/{id}',[AdminController::class,'updatedoctor']);
 
 Route::post('/editdoctor/{id}',[AdminController::class,'editdoctor']);
+
+Route::get('/emailview/{id}',[AdminController::class,'emailview']);
+
+Route::post('/sendemail/{id}',[AdminController::class,'sendemail']);
