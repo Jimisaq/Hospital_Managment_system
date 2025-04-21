@@ -8,7 +8,7 @@
         <div class="item">
           <div class="card-doctor">
             <div class="header">
-              <img src="{{ asset('doctorimage/' . $doctors->image) }}" alt="{{ $doctors->name }}">
+              <img style="height: 300px !important" src="{{ asset('doctorimage/' . $doctors->image) }}" alt="{{ $doctors->name }}">
               <div class="meta">
                 <a href="tel:{{ $doctors->phone }}"><span class="mai-call"></span></a>
                 <a href="https://wa.me/{{ $doctors->phone }}"><span class="mai-logo-whatsapp"></span></a>

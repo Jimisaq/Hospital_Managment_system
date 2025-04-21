@@ -2,6 +2,9 @@
 <html lang="en">
   <head>
     <!-- Required meta tags -->
+
+    <base href="/public">
+    
     <style type="text/css">
 
       label {
@@ -45,40 +48,31 @@
               <h1 style="padding: 20px; text-align: left;">Enter Doctor Details</h1>
 
           <!-- Update form: Method set to POST -->
-          <form action="{{ url('upload_doctor') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ url('sendemail',$data->id) }}" method="POST">
             @csrf
             <div style="padding: 15px;">
-              <label>Doctor Name</label>
-              <input type="text" name="name" placeholder="write name">
+              <label>Greeting</label>
+              <input type="text" name="greeting" required="">
             </div>
 
             <div style="padding: 15px;">
-              <label>Phone</label>
-              <input type="number" name="number" placeholder="write number">
+              <label>Body</label>
+              <input type="text" name="body" required="">
             </div>
 
             <div style="padding: 15px;">
-              <label>Specialty</label>
-              <select name="specialty" style="width: 200px;">
-
-                <option>--select--</option>
-                <option value="skin">Dermatology</option>
-                <option value="heart">Cardiology</option>
-                <option value="eyes">ENT</option>
-                <option value="teeth">Dentist</option>
-                <option value="children">Paeditrician</option>
-              </select>
-
+              <label>Action Text</label>
+              <input type="text" name="actiontext" required="">
             </div>
 
             <div style="padding: 15px;">
-              <label>Room No</label>
-              <input type="text" name="room" placeholder="write room number">
+              <label>Action Url</label>
+              <input type="text" name="actionurl" required="">
             </div>
 
             <div style="padding: 15px;">
-              <label>Doctor Image</label>
-              <input type="file" name="file">
+              <label>End Part</label>
+              <input type="text" name="endpart" required="">
             </div>
 
             <div style="padding: 15px;">

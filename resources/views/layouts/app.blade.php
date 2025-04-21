@@ -5,46 +5,50 @@
                                   <meta name="viewport" content="width=device-width, initial-scale=1" />
                                   <title>{{ config('app.name', 'Laravel') }}</title>
 
-                                  @vite(['resources/css/app.css', 'resources/js/app.js'])
-                                  @livewireStyles
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+</head>
+<body class="font-sans antialiased bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Top Navigation -->
+        <nav class="bg-white shadow">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{{ route('dashboard') }}" class="text-lg font-bold text-gray-800">
+                            {{ config('app.name', 'Laravel') }}
+                        </a>
+                    </div>
 
-                                  <!-- Bootstrap -->
-                                  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-                                  <!-- Bootstrap Icons -->
-                                  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-{{--                                  Animated CSS--}}
-                                  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-{{--                                  font awesome--}}
-                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM8e+z5l5x5l5x5l5x5l5x5l5x5l5x5l5x5" crossorigin="anonymous">
-                              </head>
-                              <body class="font-sans antialiased bg-light">
+                    <!-- Right Side Dropdown -->
+                    <div class="flex items-center space-x-4">
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex items-center text-sm font-medium text-gray-700 focus:outline-none">
+                                <img class="h-8 w-8 rounded-full object-cover mr-2" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                {{ Auth::user()->name }}
+                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
 
-                                  <!-- Top Navigation -->
-                                  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow" style="position: sticky; top: 0; z-index: 100;">
-                                      <div class="container-fluid">
-                                          <a class="navbar-brand fw-bold text-primary" href="{{ route('dashboard') }}">
-                                              <i class="bi bi-speedometer2"></i> {{ config('app.name', 'Laravel') }}
-                                          </a>
-                                          <div class="d-flex align-items-center">
-                                              <div class="dropdown">
-                                                  <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                                      <img class="rounded-circle me-2" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" style="width: 30px; height: 30px;">
-                                                      {{ Auth::user()->name }}
-                                                  </button>
-                                                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                                      <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="bi bi-person-circle"></i> Profile</a></li>
-                                                      <li>
-                                                          <form method="POST" action="{{ route('logout') }}">
-                                                              @csrf
-                                                              <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right"></i> Logout</button>
-                                                          </form>
-                                                      </li>
+                            <!-- Dropdown -->
+                            <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-md z-50">
+                                <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
 
-                                                  </ul>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </nav>
+                                <form method="POST" action="{{ route('logout') }}" x-data>
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
                                   <!-- Main Content -->
                                   <div class="d-flex">

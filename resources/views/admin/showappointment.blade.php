@@ -26,16 +26,17 @@
 
                   <tr style="background-color:black;">
 
-                    <th style="{{ $thStyle }}">Appointment ID</th>
-                    <th style="{{ $thStyle }}">Patient Name</th>
-                    <th style="{{ $thStyle }}">Email</th>
-                    <th style="{{ $thStyle }}">Phone</th>
-                    <th style="{{ $thStyle }}">Doctor Name</th>
-                    <th style="{{ $thStyle }}">Date</th>
-                    <th style="{{ $thStyle }}">Message</th>
-                    <th style="{{ $thStyle }}">Status</th>
-                    <th style="{{ $thStyle }}">Approved</th>
-                    <th style="{{ $thStyle }}">Canceled</th>
+                    <th style="padding:10px">Appointment ID</th>
+                    <th style="padding:10px">Patient Name</th>
+                    <th style="padding:10px">Email</th>
+                    <th style="padding:10px">Phone</th>
+                    <th style="padding:10px">Doctor Name</th>
+                    <th style="padding:10px">Date</th>
+                    <th style="padding:10px">Message</th>
+                    <th style="padding:10px">Status</th>
+                    <th style="padding:10px">Approved</th>
+                    <th style="padding:10px">Canceled</th>
+                    <th style="padding:10px">Send Mail</th>
                   </tr>
 
 
@@ -56,6 +57,8 @@
 
                         <td><a class="bt btn-danger" onclick="" href="{{ url('canceled', $appoint->id) }}">Canceled</a></td>
                       
+                        <td><a class="bt btn-primary" onclick="" href="{{ url('emailview', $appoint->id) }}">Send Mail</a></td>
+
                       </tr>
 
                   @endforeach
