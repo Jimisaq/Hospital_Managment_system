@@ -8,7 +8,7 @@
 
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-  <title>One Health - Medical Center HTML5 Template</title>
+  <title>One Health - Medical Center</title>
 
   <link rel="stylesheet" href="../assets/css/maicons.css">
 
@@ -30,9 +30,9 @@
         <div class="row">
           <div class="col-sm-8 text-sm">
             <div class="site-info">
-              <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
+              <a href="#"><span class="mai-call text-primary"></span> +256 734 509 825</a>
               <span class="divider">|</span>
-              <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
+              <a href="#"><span class="mai-mail text-primary"></span> onehealth@gmail.com</a>
             </div>
           </div>
           <div class="col-sm-4 text-right text-sm">
@@ -92,7 +92,7 @@
                         (Auth::user()->role == 'pharmacist' ? route('pharmacist.dashboard') : '#')))
                     }}"
                        class="px-4 py-2 text-white rounded hover:bg-blue-600"
-                       style="background-color: #2f855a !important;">
+                       style="background-color:rgb(31, 169, 100) !important;">
                         Dashboard
                     </a>
                 </li>
@@ -106,12 +106,12 @@
                     <a class="nav-link" href="{{ url('/about') }}">About Us</a>
                 </li>
                 <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/contact.html') }}">Doctors</a>
-                  </li>
+                    <a class="nav-link" href="{{ url('/contact.html') }}">Doctors</a>
+                </li>
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/contact.html') }}">News</a>
-                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/contact.html') }}">News</a>
+                </li>
                   
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
@@ -180,7 +180,7 @@
               <div class="circle-shape bg-secondary text-white">
                 <span class="mai-chatbubbles-outline"></span>
               </div>
-              <p><span>Chat</span> with a doctors</p>
+              <p><span>Chat</span> with a doctor</p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -207,8 +207,15 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 py-3 wow fadeInUp">
-            <h1>Welcome to Your Health <br> Center</h1>
-            <p class="text-grey mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Accusantium aperiam earum ipsa eius, inventore nemo labore eaque porro consequatur ex aspernatur. Explicabo, excepturi accusantium! Placeat voluptates esse ut optio facilis!</p>
+            <h1>Welcome to One Health <br> Hospital</h1>
+            <p class="text-grey mb-4">
+              Welcome to One-Health Hospital, a place where oour team of dedicated healthcare professionals is passionate about delivering
+              exceptional care to every patient, every time. With a commitment to compassion, innovation, and excellence, we're dedicated to 
+              providing a healing environment that's tailored to your unique needs. 
+              From the moment you step into our hospital, you'll notice the difference that our team of talented and caring staff makes. 
+              We're proud of our reputation for delivering outstanding patient care, and we're honored that you've chosen us to be part of
+              your healthcare journey.
+            </p>
             <a href="about.html" class="btn btn-primary">Learn More</a>
           </div>
           <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
@@ -225,11 +232,7 @@
 
 @include('user.latest')
 
-
-
-  @include('user.appointment')
-
-
+@include('user.appointment')
 
   <footer class="page-footer">
     <div class="container">
@@ -253,7 +256,7 @@
           </ul>
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
-          <h5>Our partner</h5>
+          <h5>Our partners</h5>
           <ul class="footer-menu">
             <li><a href="#">One-Fitness</a></li>
             <li><a href="#">One-Drugs</a></li>
@@ -263,8 +266,8 @@
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>Contact</h5>
           <p class="footer-link mt-2">351 Willow Street Franklin, MA 02038</p>
-          <a href="#" class="footer-link">701-573-7582</a>
-          <a href="#" class="footer-link">healthcare@temporary.net</a>
+          <a href="#" class="footer-link">+256 734 509 825</a>
+          <a href="#" class="footer-link">onehealth@gmail.com</a>
 
           <h5 class="mt-3">Social Media</h5>
           <div class="footer-sosmed mt-3">

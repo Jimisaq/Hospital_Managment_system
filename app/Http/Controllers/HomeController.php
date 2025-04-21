@@ -94,8 +94,9 @@ class HomeController extends Controller
             // If user is logged in, show their appointments
             return view('user.my_appointment', compact('appoint'));
 
-        } else {
-
+        } 
+        else 
+        {
             // If not logged in, redirect them back
             return redirect()->back();
         }
