@@ -22,7 +22,6 @@
 </head>
 
 <body>
-
   <!-- Back to top button -->
   <div class="back-to-top"></div>
 
@@ -60,47 +59,65 @@
               <span class="navbar-toggler-icon"></span>
           </button>
 
-
+          
               <!-- Search box section -->
-          <li class="nav-item">
+              <li class="nav-item">
 
-            <form class="form-inline my-2 mx-2 my-lg-0">
+                <form class="form-inline my-2 mx-2 my-lg-0">
 
-              <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword" aria-label="Search">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Enter keyword" aria-label="Search">
 
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 
-                <span class="mai-search"></span> <!-- Search Icon -->
-              </button>
+                    <span class="mai-search"></span> <!-- Search Icon -->
+                  </button>
 
-            </form>
+                </form>
 
-          </li>
+                </li>
+                      
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           
+            <ul class="navbar-nav ml-auto">
 
-              <ul class="navbar-nav ml-auto">
+              @auth
+                <li>
+                    <!-- Dashboard Button -->
+                    <a href="{{
+                        Auth::user()->role == 'admin' ? route('admin.dashboard') :
+                        (Auth::user()->role == 'doctor' ? route('doctor.dashboard') :
+                        (Auth::user()->role == 'receptionist' ? route('receptionist.dashboard') :
+                        (Auth::user()->role == 'pharmacist' ? route('pharmacist.dashboard') : '#')))
+                    }}"
+                       class="px-4 py-2 text-white rounded hover:bg-blue-600"
+                       style="background-color: #2f855a !important;">
+                        Dashboard
+                    </a>
+                </li>
+              @endauth
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/') }}">Home</a>
-                  </li>
-                  
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/about') }}">About Us</a>
-                  </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/') }}">Home</a>
+                </li>
 
-                  <li class="nav-item">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
                       <a class="nav-link" href="{{ url('/contact.html') }}">Doctors</a>
                   </li>
 
                   <li class="nav-item">
                       <a class="nav-link" href="{{ url('/contact.html') }}">News</a>
                   </li>
+                  
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
+                </li>
 
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/contact.html') }}">Contact</a>
-                  </li>
-             
+        
+
                 @if (Route::has('login'))
 
                   @auth
@@ -211,11 +228,12 @@
 
 @include('user.latest')
 
+ 
 
 @include('user.appointment')
 
-  
- 
+
+
   <footer class="page-footer">
     <div class="container">
       <div class="row px-md-3">
@@ -277,6 +295,6 @@
 <script src="../assets/vendor/wow/wow.min.js"></script>
 
 <script src="../assets/js/theme.js"></script>
-  
+
 </body>
 </html>
