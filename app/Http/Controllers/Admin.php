@@ -13,12 +13,32 @@ class Admin extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
-    {
+    // In `app/Http/Controllers/AdminController.php`
+   public function index()
+{
+    $admins = User::where('role', 'admin')->get();
+    $receptionists = User::where('role', 'receptionist')->get();
+    $doctors = User::where('role', 'doctor')->get();
+    $pharmacists = User::where('role', 'pharmacist')->get();
 
+    return view('admin.users', compact('admins', 'receptionists', 'doctors', 'pharmacists'));
+}
+    //function to search for users
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::where('name', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%")
+            ->orWhere('username', 'like', "%$query%")
+            ->limit(10)
+            ->get();
+
+        return response()->json($users);
     }
+
 
     //function to show the add user form
     public function adduser()
@@ -111,13 +131,46 @@ class Admin extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(User $user)
+    public function show($id)
     {
+        // Retrieve the user by ID
+        $user = User::findOrFail($id);
 
+        // Return the view with the user data
+        return view('admin.user_edit', compact('user'));
     }
+    public function updateUser(Request $request, $id)
+{
+    try {
+        // Validate the request for editable fields only
+        $validatedData = $request->validate([
+            'role' => 'required|in:admin,doctor,receptionist,pharmacist',
+            'phone' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+        ]);
 
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Update only the editable fields
+        $user->fill($validatedData);
+        $user->save();
+
+        // Redirect back with success message
+        return redirect()->route('profile.view', $id)->with('success', 'User updated successfully.');
+    } catch (ValidationException $e) {
+        // Return validation error messages
+        return redirect()->back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        // Log the error with user ID for debugging
+        Log::error("Error updating user (ID: $id): " . $e->getMessage());
+
+        // Redirect back with error message
+        return redirect()->back()->with('error', 'Failed to update user: ' . $e->getMessage());
+    }
+}
     /**
      * Show the form for editing the specified resource.
      *
@@ -150,5 +203,14 @@ class Admin extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function viewprofile($id)
+    {
+        // Retrieve the user by ID
+        $user = User::findOrFail($id);
+
+        // Return the profile.show view with the user data
+        return view('profile.show', compact('user'));
     }
 }
