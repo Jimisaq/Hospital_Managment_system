@@ -20,12 +20,17 @@ class Admin extends Controller
     // In `app/Http/Controllers/AdminController.php`
    public function index()
 {
+    $adminsCount = User::where('role', 'admin')->count();
+    $doctorsCount = User::where('role', 'doctor')->count();
+    $receptionistsCount = User::where('role', 'receptionist')->count();
+    $pharmacistsCount = User::where('role', 'pharmacist')->count();
+
     $admins = User::where('role', 'admin')->get();
     $receptionists = User::where('role', 'receptionist')->get();
     $doctors = User::where('role', 'doctor')->get();
     $pharmacists = User::where('role', 'pharmacist')->get();
 
-    return view('admin.users', compact('admins', 'receptionists', 'doctors', 'pharmacists'));
+    return view('admin.users', compact('admins', 'receptionists', 'doctors', 'pharmacists', 'adminsCount', 'receptionistsCount', 'doctorsCount', 'pharmacistsCount'));
 }
     //function to search for users
     public function search(Request $request)
@@ -49,46 +54,65 @@ class Admin extends Controller
     }
     //save user
     public function saveuser(Request $request)
-    {
+{
+    try {
+        // Validate the request
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|in:doctor,receptionist,pharmacist',
+            'phone' => 'nullable|string',
+            'address' => 'nullable|string',
+            'specialization' => 'required_if:role,doctor|string',
+            'license_number' => 'required_if:role,doctor|string',
+            'room_number' => 'required_if:role,doctor|string',
+            'department' => 'required_if:role,doctor|string',
+        ]);
 
-        try {
-           $validatedData = $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6|confirmed',
-                'role' => 'required|in:doctor,receptionist,pharmacist',
-                'phone' => 'nullable|string',
-                'address' => 'nullable|string',
+        // Save user data into the users table
+        $user = new User();
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
+        $user->password = bcrypt($validatedData['password']);
+        $user->role = $validatedData['role'];
+        $user->phone = $validatedData['phone'];
+        $user->address = $validatedData['address'];
+        $user->save();
+
+        // If the role is doctor, save additional fields into the doctors table
+        if ($validatedData['role'] === 'doctor') {
+            \DB::table('doctors')->insert([
+                'user_id' => $user->id,
+                'specialization' => $validatedData['specialization'],
+                'licence_number' => $validatedData['license_number'],
+                'room_number' => $validatedData['room_number'],
+                'department' => $validatedData['department'],
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
-
-            // Create the user
-            $user = new User();
-            $user->name = $validatedData['name'];
-            $user->email = $validatedData['email'];
-            $user->password = bcrypt($validatedData['password']);
-            $user->role = $validatedData['role'];
-            $user->phone = $validatedData['phone'];
-            $user->address = $validatedData['address'];
-            $user->save();
-
-            // Redirect back with success message
-            return redirect()->back()->with('success', 'User added successfully');
-        } catch (ValidationException $e) {
-            // Return validation error messages
-            return redirect()->back()->withErrors($e->errors())->withInput();
-        } catch (\Exception $e) {
-            // Log the error for debugging
-            Log::error('Error saving user: ' . $e->getMessage());
-
-            // Redirect back with error message
-            return redirect()->back()->with('error', 'Failed to add user: ' . $e->getMessage());
         }
-    }
 
+        // Redirect back with success message
+        return redirect()->back()->with('success', 'User added successfully');
+    } catch (ValidationException $e) {
+        // Return validation error messages
+        return redirect()->back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        // Log the error for debugging
+        Log::error('Error saving user: ' . $e->getMessage());
+
+        // Redirect back with error message
+        return redirect()->back()->with('error', 'Failed to add user: ' . $e->getMessage());
+    }
+}
     public function analytics()
     {
         // Fetch data for analytics
         $totalUsers = \App\Models\User::count();
+        $activeUsers = \Illuminate\Support\Facades\DB::table('users')
+            ->where('status', 'true')
+            ->count();
         $admins = \App\Models\User::where('role', 'admin')->count();
         $doctors = \App\Models\User::where('role', 'doctor')->count();
         $receptionists = \App\Models\User::where('role', 'receptionist')->count();
@@ -110,6 +134,7 @@ class Admin extends Controller
             'doctors',
             'receptionists',
             'totalPatients',
+            'activeUsers',
             'patientsLast7Days',
             'recentActivities',
             'serverUptime',

@@ -2,6 +2,41 @@
         <div class="container py-5">
             <h2 class="font-weight-bold mb-5 text-center text-primary display-4">User Management Dashboard</h2>
 
+            <div class="container">
+                <div class="row">
+                    <!-- Admins -->
+                    <div class="col-md-3 mb-4">
+                        <div class="bg-gradient-to-r from-green-500 to-green-700 text-white shadow-lg rounded-lg p-6 animate__animated animate__fadeIn">
+                            <h3 class="text-lg font-semibold"><i class="fas fa-user-shield mr-2"></i> Admins</h3>
+                            <p class="text-4xl font-bold mt-2">{{ $adminsCount }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Doctors -->
+                    <div class="col-md-3 mb-4">
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-700 text-white shadow-lg rounded-lg p-6 animate__animated animate__fadeIn">
+                            <h3 class="text-lg font-semibold"><i class="fas fa-user-md mr-2"></i> Doctors</h3>
+                            <p class="text-4xl font-bold mt-2">{{ $doctorsCount }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Receptionists -->
+                    <div class="col-md-3 mb-4">
+                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-700 text-white shadow-lg rounded-lg p-6 animate__animated animate__fadeIn">
+                            <h3 class="text-lg font-semibold"><i class="fas fa-concierge-bell mr-2"></i> Receptionists</h3>
+                            <p class="text-4xl font-bold mt-2">{{ $receptionistsCount }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Pharmacists -->
+                    <div class="col-md-3 mb-4">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg rounded-lg p-6 animate__animated animate__fadeIn">
+                            <h3 class="text-lg font-semibold"><i class="fas fa-pills mr-2"></i> Pharmacists</h3>
+                            <p class="text-4xl font-bold mt-2">{{ $pharmacistsCount }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- 🔍 Search Bar -->
             <div class="mb-5 text-center">
                 <div class="d-flex justify-content-center">

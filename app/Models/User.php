@@ -33,6 +33,7 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
         'usertype',
         'role',
         'password',
+        'status'
     ];
 
     /**
