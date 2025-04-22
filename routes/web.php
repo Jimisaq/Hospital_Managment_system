@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\DoctorController;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\HomeController;
 
 /*
@@ -74,4 +75,10 @@ Route::get('/activities/{id}', [Admin::class, 'showActivity'])->name('activities
 
 //reports
 Route::get('/admin/reports', [Admin::class, 'reports'])->name('admin.reports')->middleware('auth');
+
+Route::get('/doctor/search-patients', [DoctorController::class, 'searchPatients'])->name('doctor.searchPatients');
+
+Route::get('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 'showDiagnosisForm'])->name('doctor.showDiagnosisForm');
+
+Route::post('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 'submitDiagnosisForm'])->name('doctor.submitDiagnosisForm');
 

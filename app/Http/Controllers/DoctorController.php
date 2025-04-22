@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Patient;
 use Illuminate\Http\Request;
+
+use App\Models\MedicalRecord;
+use App\Models\Prescription;
 
 class DoctorController extends Controller
 {
@@ -14,73 +18,71 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $doctorsCount = User::where('role', 'doctor')->count();
     
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $doctors = User::where('role', 'doctor')->get();
+    
+        return view('admin.doctor.home', compact( 'doctors', 'pharmacists'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Search patients by name.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function searchPatients(Request $request)
     {
-        //
+        $query = $request->input('query');
+
+        $patients = Patient::where('name', 'LIKE', "%{$query}%")->get();
+
+        return view('admin.doctor.home', compact('patients'));
     }
 
     /**
-     * Display the specified resource.
+     * Show the diagnosis form for a patient.
      *
-     * @param  \App\Models\User  $user
+     * @param int $patientId
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function showDiagnosisForm($patientId)
     {
-        //
+        $patient = Patient::findOrFail($patientId);
+        return view('admin.doctor.diagnosis_form', compact('patient'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Handle the diagnosis form submission.
      *
-     * @param  \App\Models\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param int $patientId
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function submitDiagnosisForm(Request $request, $patientId)
     {
-        //
-    }
+        $request->validate([
+            'diagnosis' => 'required|string',
+            'prescriptions' => 'nullable|string',
+            'reference' => 'nullable|in:lab,scan,x-ray',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+        $patient = Patient::findOrFail($patientId);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
+        // Create or update medical record
+        $medicalRecord = MedicalRecord::updateOrCreate(
+            ['patient_id' => $patient->id],
+            ['diagnosis' => $request->input('diagnosis'), 'reference' => $request->input('reference')]
+        );
+
+        // Create prescription if provided
+        if ($request->filled('prescriptions')) {
+            Prescription::create([
+                'patient_id' => $patient->id,
+                'prescription' => $request->input('prescriptions'),
+            ]);
+        }
+
+        return redirect()->route('doctor.dashboard')->with('success', 'Medical record updated successfully.');
     }
 }
