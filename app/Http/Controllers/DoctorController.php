@@ -85,4 +85,20 @@ class DoctorController extends Controller
 
         return redirect()->route('doctor.dashboard')->with('success', 'Medical record updated successfully.');
     }
+
+    /**
+     * Show medical records for a patient.
+     *
+     * @param int $patientId
+     * @return \Illuminate\Http\Response
+     */
+    public function showMedicalRecords($patientId)
+    {
+        $patient = Patient::findOrFail($patientId);
+        $medicalRecords = MedicalRecord::where('patient_id', $patientId)
+            ->orderBy('visit_date', 'desc')
+            ->get();
+
+        return view('admin.doctor.medical_records', compact('patient', 'medicalRecords'));
+    }
 }

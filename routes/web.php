@@ -82,3 +82,5 @@ Route::get('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 's
 
 Route::post('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 'submitDiagnosisForm'])->name('doctor.submitDiagnosisForm');
 
+Route::get('/doctor/patient/{patientId}/medical-records', [DoctorController::class, 'showMedicalRecords'])->name('doctor.showMedicalRecords');
+

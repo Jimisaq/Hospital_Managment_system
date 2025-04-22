@@ -28,6 +28,7 @@
                                 <li>
                                     {{ $patient->name }} - {{ $patient->email }} - {{ $patient->phone }}
                                     <a href="{{ route('doctor.showDiagnosisForm', ['patientId' => $patient->id]) }}" class="ml-4 text-blue-600 hover:underline">Add Diagnosis</a>
+                                    <a href="{{ route('doctor.showMedicalRecords', ['patientId' => $patient->id]) }}" class="ml-4 text-green-600 hover:underline">View Medical Records</a>
                                 </li>
                             @endforeach
                         </ul>
