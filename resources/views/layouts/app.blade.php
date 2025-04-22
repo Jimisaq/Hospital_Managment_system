@@ -70,7 +70,7 @@
                                                       <a class="nav-link text-black" href="{{ route('doctor.dashboard') }}"><i class="bi bi-bar-chart"></i> Analytics</a>
                                                   </li>
                                                   <li class="nav-item">
-                                                      <a class="nav-link text-black" href="#"><i class="bi bi-person-badge"></i> Patients</a>
+                                                      <a class="nav-link text-black" href="{{ route('doctor.searchPatients') }}"><i class="bi bi-person-badge"></i> Patients</a>
                                                   </li>
                                                   <li class="nav-item">
                                                       <a class="nav-link text-black" href="#"><i class="bi bi-calendar-check"></i> Appointments</a>
