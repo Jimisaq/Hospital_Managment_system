@@ -19,6 +19,55 @@
                     </div>
                 @endif
 
+                @if($lowStockDrugs->isNotEmpty())
+                    <div class="mb-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+                        <h3 class="font-bold mb-2">Low Stock Alerts</h3>
+                        <ul>
+                            @foreach($lowStockDrugs as $lowStockDrug)
+                                <li>
+                                    {{ $lowStockDrug->drug_name }} - Stock: {{ $lowStockDrug->quantity_in_stock }}
+                                    <a href="{{ route('pharmacist.inventory.createPurchaseOrder', $lowStockDrug->id) }}" class="text-blue-600 hover:underline ml-2">Order More</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if($purchaseOrders->isNotEmpty())
+                    <div class="mb-4 p-4 bg-gray-100 border border-gray-300 rounded">
+                        <h3 class="font-bold mb-2">Purchase Orders</h3>
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Drug</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity Ordered</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($purchaseOrders as $order)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->drug->drug_name ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->quantity_ordered }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ ucfirst($order->status) }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <form method="POST" action="{{ route('pharmacist.inventory.updatePurchaseOrderStatus', $order->id) }}" class="inline-block">
+                                                @csrf
+                                                <select name="status" onchange="this.form.submit()" class="border rounded px-2 py-1">
+                                                    <option value="pending" {{ $order->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                                    <option value="ordered" {{ $order->status === 'ordered' ? 'selected' : '' }}>Ordered</option>
+                                                    <option value="received" {{ $order->status === 'received' ? 'selected' : '' }}>Received</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+
                 @if($drugs->isEmpty())
                     <p>No drugs found in inventory.</p>
                 @else

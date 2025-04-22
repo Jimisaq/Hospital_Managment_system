@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Drug;
 use Illuminate\Http\Request;
 
+use App\Models\PurchaseOrder;
+
 class PharmacistInventoryController extends Controller
 {
     /**
@@ -13,7 +15,59 @@ class PharmacistInventoryController extends Controller
     public function index()
     {
         $drugs = Drug::all();
-        return view('pharmacist.inventory.index', compact('drugs'));
+        $lowStockDrugs = Drug::where('quantity_in_stock', '<=', 10)->get();
+        $purchaseOrders = PurchaseOrder::with('drug')->orderBy('created_at', 'desc')->get();
+        return view('pharmacist.inventory.index', compact('drugs', 'lowStockDrugs', 'purchaseOrders'));
+    }
+
+    /**
+     * Show form to create a purchase order for a low stock drug.
+     */
+    public function createPurchaseOrder($drugId)
+    {
+        $drug = Drug::findOrFail($drugId);
+        return view('pharmacist.inventory.create_purchase_order', compact('drug'));
+    }
+
+    /**
+     * Store a new purchase order.
+     */
+    public function storePurchaseOrder(Request $request)
+    {
+        $request->validate([
+            'drug_id' => 'required|exists:drugs,id',
+            'quantity_ordered' => 'required|integer|min:1',
+        ]);
+
+        PurchaseOrder::create([
+            'drug_id' => $request->input('drug_id'),
+            'quantity_ordered' => $request->input('quantity_ordered'),
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('pharmacist.inventory.index')->with('success', 'Purchase order created successfully.');
+    }
+
+    /**
+     * Update purchase order status.
+     */
+    public function updatePurchaseOrderStatus(Request $request, $id)
+    {
+        $purchaseOrder = PurchaseOrder::findOrFail($id);
+        $request->validate([
+            'status' => 'required|in:pending,ordered,received',
+        ]);
+        $purchaseOrder->status = $request->input('status');
+        $purchaseOrder->save();
+
+        // If received, update drug stock
+        if ($purchaseOrder->status === 'received') {
+            $drug = $purchaseOrder->drug;
+            $drug->quantity_in_stock += $purchaseOrder->quantity_ordered;
+            $drug->save();
+        }
+
+        return redirect()->route('pharmacist.inventory.index')->with('success', 'Purchase order status updated.');
     }
 
     /**
