@@ -83,3 +83,15 @@ Route::get('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 's
 Route::post('/doctor/patient/{patientId}/diagnosis', [DoctorController::class, 'submitDiagnosisForm'])->name('doctor.submitDiagnosisForm');
 
 Route::get('/doctor/patient/{patientId}/medical-records', [DoctorController::class, 'showMedicalRecords'])->name('doctor.showMedicalRecords');
+
+Route::prefix('pharmacist')->middleware('auth')->group(function () {
+    Route::get('/inventory', [App\Http\Controllers\PharmacistInventoryController::class, 'index'])->name('pharmacist.inventory.index');
+    Route::get('/inventory/create', [App\Http\Controllers\PharmacistInventoryController::class, 'create'])->name('pharmacist.inventory.create');
+    Route::post('/inventory', [App\Http\Controllers\PharmacistInventoryController::class, 'store'])->name('pharmacist.inventory.store');
+    Route::get('/inventory/{id}/edit', [App\Http\Controllers\PharmacistInventoryController::class, 'edit'])->name('pharmacist.inventory.edit');
+    Route::put('/inventory/{id}', [App\Http\Controllers\PharmacistInventoryController::class, 'update'])->name('pharmacist.inventory.update');
+
+    Route::get('/prescriptions', [App\Http\Controllers\PharmacistPrescriptionController::class, 'index'])->name('pharmacist.prescriptions.index');
+    Route::post('/prescriptions/{id}/approve', [App\Http\Controllers\PharmacistPrescriptionController::class, 'approve'])->name('pharmacist.prescriptions.approve');
+    Route::post('/prescriptions/{id}/deny', [App\Http\Controllers\PharmacistPrescriptionController::class, 'deny'])->name('pharmacist.prescriptions.deny');
+});

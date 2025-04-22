@@ -49,7 +49,8 @@ class DoctorController extends Controller
     public function showDiagnosisForm($patientId)
     {
         $patient = Patient::findOrFail($patientId);
-        return view('admin.doctor.diagnosis_form', compact('patient'));
+        $drugs = \App\Models\Drug::all();
+        return view('admin.doctor.diagnosis_form', compact('patient', 'drugs'));
     }
 
     /**
@@ -63,7 +64,10 @@ class DoctorController extends Controller
     {
         $request->validate([
             'diagnosis' => 'required|string',
-            'prescriptions' => 'nullable|string',
+            'prescriptions' => 'nullable|array',
+            'prescriptions.*.drug_id' => 'required|exists:drugs,id',
+            'prescriptions.*.quantity' => 'required|integer|min:1',
+            'prescriptions.*.dosage' => 'nullable|string',
             'reference' => 'nullable|in:lab,scan,x-ray',
         ]);
 
@@ -75,12 +79,18 @@ class DoctorController extends Controller
             ['diagnosis' => $request->input('diagnosis'), 'reference' => $request->input('reference')]
         );
 
-        // Create prescription if provided
+        // Create prescriptions if provided
         if ($request->filled('prescriptions')) {
-            Prescription::create([
-                'patient_id' => $patient->id,
-                'prescription' => $request->input('prescriptions'),
-            ]);
+            foreach ($request->input('prescriptions') as $prescriptionData) {
+                Prescription::create([
+                    'record_id' => $medicalRecord->id,
+                    'drug_id' => $prescriptionData['drug_id'],
+                    'quantity' => $prescriptionData['quantity'],
+                    'dosage' => $prescriptionData['dosage'] ?? null,
+                    'instruction' => '',
+                    'status' => 'pending',
+                ]);
+            }
         }
 
         return redirect()->route('doctor.dashboard')->with('success', 'Medical record updated successfully.');

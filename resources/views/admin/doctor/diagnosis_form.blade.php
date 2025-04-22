@@ -30,11 +30,43 @@
 
                     <div class="mb-4">
                         <label for="prescriptions" class="block font-medium text-sm text-gray-700">Prescriptions (optional)</label>
-                        <textarea id="prescriptions" name="prescriptions" rows="3" class="border rounded w-full px-3 py-2 @error('prescriptions') border-red-500 @enderror">{{ old('prescriptions') }}</textarea>
+                        <div id="prescriptions-container">
+                            <div class="flex space-x-2 mb-2 prescription-row">
+                                <select name="prescriptions[0][drug_id]" class="border rounded px-3 py-2 w-2/3" required>
+                                    <option value="">-- Select Drug --</option>
+                                    @foreach($drugs as $drug)
+                                        <option value="{{ $drug->id }}">{{ $drug->drug_name }} (Stock: {{ $drug->quantity_in_stock }})</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" name="prescriptions[0][quantity]" min="1" placeholder="Quantity" class="border rounded px-3 py-2 w-1/6" required>
+                                <input type="text" name="prescriptions[0][dosage]" placeholder="Dosage" class="border rounded px-3 py-2 w-1/6" >
+                            </div>
+                        </div>
+                        <button type="button" id="add-prescription" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-3 rounded">Add More</button>
                         @error('prescriptions')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <script>
+                        document.getElementById('add-prescription').addEventListener('click', function() {
+                            const container = document.getElementById('prescriptions-container');
+                            const index = container.children.length;
+                            const newRow = document.createElement('div');
+                            newRow.classList.add('flex', 'space-x-2', 'mb-2', 'prescription-row');
+                            newRow.innerHTML = `
+                                <select name="prescriptions[${index}][drug_id]" class="border rounded px-3 py-2 w-2/3" required>
+                                    <option value="">-- Select Drug --</option>
+                                    @foreach($drugs as $drug)
+                                        <option value="{{ $drug->id }}">{{ $drug->drug_name }} (Stock: {{ $drug->quantity_in_stock }})</option>
+                                    @endforeach
+                                </select>
+                                <input type="number" name="prescriptions[${index}][quantity]" min="1" placeholder="Quantity" class="border rounded px-3 py-2 w-1/6" required>
+                                <input type="text" name="prescriptions[${index}][dosage]" placeholder="Dosage" class="border rounded px-3 py-2 w-1/6" >
+                            `;
+                            container.appendChild(newRow);
+                        });
+                    </script>
 
                     <div class="mb-4">
                         <label for="reference" class="block font-medium text-sm text-gray-700">Reference (optional)</label>
