@@ -179,10 +179,10 @@
           <div class="col-lg-6 py-3 wow fadeInUp">
             <h1>Welcome to Your Health <br> Center</h1>
             <p class="text-grey mb-4">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-              sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-               At vero eos et accusam et justo duo dolores et ea rebum. Accusantium aperiam earum ipsa eius, 
-               inventore nemo labore eaque porro consequatur ex aspernatur. Explicabo, excepturi accusantium! Placeat voluptates esse ut optio facilis!
+            Welcome to One-Health Hospital, a place where our team of dedicated healthcare professionals is passionate about delivering exceptional care to every patient, every time. 
+            With a commitment to compassion, innovation, and excellence, we're dedicated to providing a healing environment that's tailored to your unique needs. 
+            From the moment you step into our hospital, you'll notice the difference that our team of talented and caring staff makes. 
+            We're proud of our reputation for delivering outstanding patient care, and we're honored that you've chosen us to be part of your healthcare journey.
             </p>
             <a href="about.html" class="btn btn-primary">Learn More</a>
           </div>
