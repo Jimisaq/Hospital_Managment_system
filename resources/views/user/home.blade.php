@@ -8,7 +8,7 @@
 
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-  <title>One Health - Medical Center HTML5 Template</title>
+  <title>One-Health Medical Center/title>
 
   <link rel="stylesheet" href="../assets/css/maicons.css">
 
@@ -30,9 +30,9 @@
         <div class="row">
           <div class="col-sm-8 text-sm">
             <div class="site-info">
-              <a href="#"><span class="mai-call text-primary"></span> +00 123 4455 6666</a>
+              <a href="#"><span class="mai-call text-primary"></span> +256 759 595 959</a>
               <span class="divider">|</span>
-              <a href="#"><span class="mai-mail text-primary"></span> mail@example.com</a>
+              <a href="#"><span class="mai-mail text-primary"></span> onehealth@gmail.com</a>
             </div>
           </div>
           <div class="col-sm-4 text-right text-sm">
@@ -237,8 +237,8 @@
         </div>
         <div class="col-sm-6 col-lg-3 py-3">
           <h5>Contact</h5>
-          <p class="footer-link mt-2">351 Willow Street Franklin, MA 02038</p>
-          <a href="#" class="footer-link">701-573-7582</a>
+          <p class="footer-link mt-2">351 Buganda Road, Kampala</p>
+          <a href="#" class="footer-link">+256 759 595 959</a>
           <a href="#" class="footer-link">healthcare@temporary.net</a>
 
           <h5 class="mt-3">Social Media</h5>
