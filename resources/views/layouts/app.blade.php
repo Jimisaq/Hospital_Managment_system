@@ -67,13 +67,13 @@
                                               @endif
                                               @if (Auth::user() && Auth::user()->role === 'doctor')
                                                   <li class="nav-item">
-                                                      <a class="nav-link text-white" href="{{ route('doctor.dashboard') }}"><i class="bi bi-bar-chart"></i> Analytics</a>
+                                                      <a class="nav-link text-black" href="{{ route('doctor.dashboard') }}"><i class="bi bi-bar-chart"></i> Analytics</a>
                                                   </li>
                                                   <li class="nav-item">
-                                                      <a class="nav-link text-white" href="#"><i class="bi bi-person-badge"></i> Patients</a>
+                                                      <a class="nav-link text-black" href="#"><i class="bi bi-person-badge"></i> Patients</a>
                                                   </li>
                                                   <li class="nav-item">
-                                                      <a class="nav-link text-white" href="#"><i class="bi bi-calendar-check"></i> Appointments</a>
+                                                      <a class="nav-link text-black" href="#"><i class="bi bi-calendar-check"></i> Appointments</a>
                                                   </li>
                                               @endif
                                               @if (Auth::user() && Auth::user()->role === 'receptionist')
@@ -83,7 +83,6 @@
                                                   <li class="nav-item">
                                                       <a class="nav-link text-white" href="#"><i class="bi bi-calendar-check"></i> Appointments</a>
                                                   </li>
-
                                               @endif
                                               @if (Auth::user() && Auth::user()->role === 'pharmacist')
                                                   <li class="nav-item">
