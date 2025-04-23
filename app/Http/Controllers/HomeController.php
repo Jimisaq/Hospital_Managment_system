@@ -4,29 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Appointment;
 
 class HomeController extends Controller
 {
-    public function redirect()
+   public function redirect()
     {
         if (Auth::id()) {
-
             if (Auth::user()->usertype == '0') {
 
-                $doctor = Doctor::all();
-                return view('user.home', compact('doctor'));
-
+                $doctors = Doctor::all();
+                return view('user.home', compact('doctors'));
             } else {
-                return view('admin.home');
+                return view('admin.home'); // this will now load properly
             }
         } else {
             return redirect()->back();
         }
     }
-
     public function index()
     {
         if (Auth::check()) {
@@ -88,24 +84,21 @@ class HomeController extends Controller
 
     public function myappointment(){
         
-        if(Auth::id())
-        {
-            if(Auth::user()->usertype==0)
-            {
-                $userid=Auth::user()->id;
+        if(Auth::id()){
+
+            $userid=Auth::user()->id;
             
-                // Fetch appointments for the logged-in user
-                $appoint=appointment::where('user_id',$userid)->get();
-    
-                // If user is logged in, show their appointments
-                return view('user.my_appointment', compact('appoint'));
-            }    
+            // Fetch appointments for the logged-in user
+            $appoint=appointment::where('user_id',$userid)->get();
+
+            // If user is logged in, show their appointments
+            return view('user.my_appointment', compact('appoint'));
 
         } 
         else 
         {
             // If not logged in, redirect them back
-            return redirect('login');
+            return redirect()->back();
         }
 
     }

@@ -9,9 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements Auditable, MustVerifyEmail
 {
+    use \OwenIt\Auditing\Auditable;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -26,6 +28,10 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'address',
+        'usertype',
+        'role',
         'password',
     ];
 
@@ -34,12 +40,12 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
+//    protected $hidden = [
+//        'password',
+//        'remember_token',
+//        'two_factor_recovery_codes',
+//        'two_factor_secret',
+//    ];
 
     /**
      * The attributes that should be cast.
@@ -59,3 +65,5 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 }
+
+
